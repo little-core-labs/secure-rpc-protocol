@@ -19,6 +19,7 @@ const server = net.createServer((socket) => {
   })
 
   rpc.command('ping', (req) => {
+    console.log('ping')
     return 'pong'
   })
 })
