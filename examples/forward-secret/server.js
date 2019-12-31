@@ -2,9 +2,7 @@ const secureRPC = require('../../.')
 const net = require('net')
 const runp = require('run-parallel')
 
-const server = net.createServer({
-  allowHalfOpen: true
-}, (socket) => {
+const server = net.createServer((socket) => {
   // 'connection' listener.
   console.log('client connected')
   socket.on('close', () => {

@@ -1,9 +1,7 @@
 const secureRPC = require('../../.')
 const net = require('net')
 
-const socket = new net.Socket({
-  allowHalfOpen: true
-})
+const socket = new net.Socket()
 
 socket.on('close', () => {
   console.log('socket closed')
@@ -83,13 +81,8 @@ socket.connect(8124, () => {
   process.once('SIGTERM', quit)
 
   function quit () {
-    rpc.sec.end(null, null, (err) => {
-      debugger
-      if (err) {
-        console.error(err)
-      } else {
-        console.log('client sent `FINISH` message')
-      }
+    rpc.sec.end(() => {
+      console.log('client sent `FINISH` message')
     })
   }
 })
