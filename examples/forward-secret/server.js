@@ -1,56 +1,14 @@
 const secureRPC = require('../../.')
 const net = require('net')
-const runp = require('run-parallel')
 
 const server = net.createServer((socket) => {
   // 'connection' listener.
-  console.log('client connected')
-  socket.on('close', () => {
-    console.log('socket closed')
-  })
-
-  socket.on('connect', () => {
-    console.log('socket connected')
-  })
-
-  socket.on('drain', () => {
-    console.log('socket drain')
-  })
-
-  socket.on('end', () => {
-    console.log('socket ended')
-  })
-
-  socket.on('error', (err) => {
-    console.error('socket errored')
-    console.error(err)
-  })
-
-  socket.on('lookup', (...args) => {
-    console.log('socket lookup')
-    console.log(args)
-  })
-
-  socket.on('ready', () => {
-    console.log('socket ready')
-  })
-
-  socket.on('timeout', () => {
-    console.log('socket timeout')
-  })
+  const client = {
+    id: Math.random().toString(36).slice(2)
+  }
+  console.log(`client ${client.id} connected`)
 
   const rpc = secureRPC(socket, false)
-
-  rpc.sec.on('end', () => {
-    console.log('noise-peer end')
-    rpc.sec.end(err => {
-      if (err) {
-        console.error('sec error:')
-        console.error(err)
-      }
-      console.log(`session for ${client.id} is ended`)
-    })
-  })
 
   rpc.sec.on('close', () => {
     console.log('noise-peer close')
@@ -63,15 +21,8 @@ const server = net.createServer((socket) => {
 
   rpc.sec.on('timeout', () => {
     console.error('noise-peer timeout')
-    rpc.sec.end(err => {
-      if (err) console.err(err)
-      console.error('noise-peer ended after timeout')
-    })
+    rpc.sec.end(() => console.error('noise-peer ended after timeout'))
   })
-
-  const client = {
-    id: Math.random().toString(36).slice(2)
-  }
 
   rpc.command('echo', (req) => {
     console.log(req.arguments)
@@ -88,13 +39,7 @@ const server = net.createServer((socket) => {
 
   function endSession () {
     console.error(`ending session for ${client.id}:`)
-    rpc.sec.end(err => {
-      if (err) {
-        console.error('sec error:')
-        console.error(err)
-      }
-      console.log(`session for ${client.id} is ended`)
-    })
+    rpc.sec.end(() => console.log(`session for ${client.id} is ended`))
   }
 })
 
