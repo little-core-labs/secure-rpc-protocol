@@ -95,6 +95,6 @@ MIT
 [rpc]: https://github.com/little-core-labs/rpc-protocol
 [xx]: https://noiseexplorer.com/patterns/XX/
 [nn]: https://noiseexplorer.com/patterns/NN/
-[kx]: https://noiseexplorer.com/patterns/XK/
+[xk]: https://noiseexplorer.com/patterns/XK/
 [sw]: https://github.com/feross/simple-websocket
 [sh]: https://github.com/emilbayes/simple-handshake
