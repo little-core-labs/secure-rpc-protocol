@@ -88,3 +88,13 @@ See [`noise-peer`][npeer] and [`noise-protocol`][np] and the included examples t
 ## License
 
 MIT
+
+[duplex]: https://nodejs.org/api/stream.html#stream_duplex_and_transform_streams
+[np]: https://github.com/emilbayes/noise-protocol
+[npeer]: https://github.com/emilbayes/noise-peer
+[rpc]: https://github.com/little-core-labs/rpc-protocol
+[xx]: https://noiseexplorer.com/patterns/XX/
+[nn]: https://noiseexplorer.com/patterns/NN/
+[kx]: https://noiseexplorer.com/patterns/XK/
+[sw]: https://github.com/feross/simple-websocket
+[sh]: https://github.com/emilbayes/simple-handshake
