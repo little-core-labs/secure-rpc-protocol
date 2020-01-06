@@ -8,11 +8,11 @@ socket.connect(8124, () => {
 
   rpc.sec.on('end', () => {
     console.log('noise-peer end')
-    socket.end()
   })
 
   rpc.sec.on('close', () => {
     console.log('noise-peer close')
+    clearInterval(pinger)
   })
 
   rpc.sec.on('error', (err) => {
@@ -33,20 +33,20 @@ socket.connect(8124, () => {
     console.log(res) // [ 'hello world' ]
   })
 
-  rpc.call('ping', null, receivePong)
-
   function receivePong (err, res) {
     if (err) console.error(err)
     console.log(res)
-    setTimeout(() => {
-      rpc.call('ping', null, receivePong)
-    }, 5000)
   }
+
+  const pinger = setInterval(() => {
+    rpc.call('ping', null, receivePong)
+  }, 1000)
 
   process.once('SIGINT', quit)
   process.once('SIGTERM', quit)
 
   function quit () {
+    clearInterval(pinger)
     rpc.sec.end(() => {
       console.log('client sent `FINISH` message')
     })

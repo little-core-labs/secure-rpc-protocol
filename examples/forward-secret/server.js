@@ -12,6 +12,13 @@ const server = net.createServer((socket) => {
 
   rpc.sec.on('close', () => {
     console.log('noise-peer close')
+    process.removeListener('SIGINT', endSession)
+    process.removeListener('SIGTERM', endSession)
+  })
+
+  rpc.sec.on('end', () => {
+    console.log('noise-peer end')
+    socket.end(() => { console.log('send end packet') })
   })
 
   rpc.sec.on('error', (err) => {
@@ -60,6 +67,5 @@ function quit () {
   server.close((err) => {
     if (err) throw err
     console.log('server gracefully shutdown')
-    process.exit(0)
   })
 }
