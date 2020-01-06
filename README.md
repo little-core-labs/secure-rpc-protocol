@@ -1,5 +1,5 @@
 # secure-rpc-protocol
-[![Actions Status](https://github.com/bcomnes/secure-rpc-protocol/workflows/tests/badge.svg)](https://github.com/bcomnes/secure-rpc-protocol/actions)
+[![Actions Status](https://github.com/little-core-labs/secure-rpc-protocol/workflows/tests/badge.svg)](https://github.com/little-core-labs/secure-rpc-protocol/actions)
 
 WIP - nothing to see here
 
