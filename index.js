@@ -20,3 +20,4 @@ function createSecureRPC (stream, isInitiator, opts = {}) {
 }
 
 module.exports = createSecureRPC
+module.exports.peer = peer
