@@ -6,16 +6,17 @@ const socket = new net.Socket()
 socket.connect(8124, () => {
   const rpc = secureRPC(socket, true)
 
-  rpc.sec.on('end', () => {
-    console.log('noise-peer end')
-  })
-
-  rpc.sec.on('close', () => {
-    console.log('noise-peer close')
+  socket.on('close', () => {
+    console.log('underlying socket close')
     clearInterval(pinger)
   })
 
+  rpc.sec.on('end', () => {
+    console.log('noise-peer received end packet')
+  })
+
   rpc.sec.on('error', (err) => {
+    // handle secure socket errors if you want
     console.error('noise-peer errored')
     console.error(err)
   })

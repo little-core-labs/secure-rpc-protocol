@@ -10,24 +10,26 @@ const server = net.createServer((socket) => {
 
   const rpc = secureRPC(socket, false)
 
-  rpc.sec.on('close', () => {
-    console.log('noise-peer close')
+  socket.on('close', () => {
+    console.log(`socket closed for ${client.id}`)
+    // clean up any remaining listeners when the socket is closed
     process.removeListener('SIGINT', endSession)
     process.removeListener('SIGTERM', endSession)
   })
 
   rpc.sec.on('end', () => {
-    console.log('noise-peer end')
-    socket.end(() => { console.log('send end packet') })
+    console.log(`noise-peer received end packet for ${client.id}`)
   })
 
   rpc.sec.on('error', (err) => {
-    console.error('noise-peer errored')
+    // handle secure socket errors if you want
+    console.error(`noise-peer client ${client.id} errored`)
     console.error(err)
   })
 
   rpc.sec.on('timeout', () => {
-    console.error('noise-peer timeout')
+    // handle timeouts if you need to
+    console.error(`noise-peer ${client.id} timeout`)
     rpc.sec.end(() => console.error('noise-peer ended after timeout'))
   })
 
@@ -46,6 +48,7 @@ const server = net.createServer((socket) => {
 
   function endSession () {
     console.error(`ending session for ${client.id}:`)
+    // End sessions from the secure stream
     rpc.sec.end(() => console.log(`session for ${client.id} is ended`))
   }
 })
@@ -65,6 +68,8 @@ process.once('SIGTERM', quit)
 function quit () {
   console.log('server is shutting down')
   server.close((err) => {
+    // Runs after all sessions are ended.  You should set up session
+    // signalling  or listen to the same ending signal from the session.
     if (err) throw err
     console.log('server gracefully shutdown')
   })
