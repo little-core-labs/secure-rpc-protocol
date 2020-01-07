@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "noise-peer": "^1.1.0",
-    "rpc-protocol": "^0.2.2"
+    "rpc-protocol": "^0.2.3"
   },
   "devDependencies": {
     "simple-websocket": "^8.1.1",
