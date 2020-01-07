@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "noise-peer": "^1.1.0",
-    "pump": "^3.0.0",
     "rpc-protocol": "^0.2.2"
   },
   "devDependencies": {
